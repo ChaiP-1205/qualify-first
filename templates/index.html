@@ -19,8 +19,8 @@
     capture_pageview: false,              // sent below, once a ?ref= source is registered
     save_campaign_params: true,           // UTM parameters, captured with the pageview
     disable_session_recording: false,
-    // Nothing typed is recorded, nor the email draft shown on the page.
-    session_recording: { maskAllInputs: true, maskTextSelector: '.email, .angle' },
+    // Replays show what visitors type (company, website, note) and the email draft on the page: nothing is masked.
+    session_recording: { maskAllInputs: false },
   });
   // ?ref=hc with no utm_source counts as utm_source "hc", on the pageview and for the rest of the session.
   // Only a short plain code is taken; nothing else is read from the URL.
