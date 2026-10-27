@@ -1,0 +1,178 @@
+{
+  "business_name": "Resend",
+  "typed_name": null,
+  "reason": null,
+  "seller_key": "vanta",
+  "seller": "Vanta",
+  "mismatch_banner": null,
+  "website_found": "resend.com",
+  "domain": "resend.com",
+  "site_note": null,
+  "sources_count": 10,
+  "status": "draft_written",
+  "verdict": "Possible fit",
+  "verdict_tone": "possible",
+  "why_line": "Already certified (SOC 2 Type 2, ISO 27001): the opening is keeping frameworks current, adding new ones or switching tools, not first-time compliance.",
+  "fit_score": 60,
+  "checklist": [
+    {
+      "status": "pass",
+      "text": "Seed to Series B stage"
+    },
+    {
+      "status": "pass",
+      "text": "Sells to enterprise customers"
+    },
+    {
+      "status": "pass",
+      "text": "Enough info found about them"
+    },
+    {
+      "status": "fail",
+      "text": "Already holds SOC 2 Type 2 and ISO 27001",
+      "sr": ""
+    }
+  ],
+  "category": "Developer Tools",
+  "draft": null,
+  "draft_note": "Likely already a Vanta customer: route to their account manager, not sales.",
+  "existing_customer": true,
+  "contacts": {
+    "size": "small",
+    "people": [
+      {
+        "name": "Zeno Rocha",
+        "title": "Co-founder & CEO",
+        "email": null,
+        "phone": null,
+        "sources": [
+          {
+            "url": "https://getlatka.com/companies/resend.com",
+            "title": "getlatka.com"
+          }
+        ],
+        "reason": "Co-founder & CEO: decides what a company this size buys",
+        "linkedin": "https://www.linkedin.com/search/results/people/?keywords=Zeno+Rocha+Resend"
+      },
+      {
+        "name": "Bu Kinoshita",
+        "title": "Co-Founder & CTO",
+        "email": null,
+        "phone": null,
+        "sources": [
+          {
+            "url": "https://www.cbinsights.com/company/resend/people",
+            "title": "cbinsights.com"
+          }
+        ],
+        "reason": "Co-Founder & CTO: decides what a company this size buys",
+        "linkedin": "https://www.linkedin.com/search/results/people/?keywords=Bu+Kinoshita+Resend"
+      }
+    ],
+    "look_for": [
+      {
+        "title": "CTO",
+        "reason": "CTO: owns the systems an audit covers",
+        "linkedin": "https://www.linkedin.com/search/results/people/?keywords=CTO+Resend"
+      },
+      {
+        "title": "Head of Security",
+        "reason": "Head of Security: owns compliance and security reviews",
+        "linkedin": "https://www.linkedin.com/search/results/people/?keywords=Head+of+Security+Resend"
+      }
+    ],
+    "backup": []
+  },
+  "talking": {
+    "summary": "Already certified: talk upkeep, new frameworks or switching tools",
+    "points": [
+      "Likely already a Vanta customer: check your CRM before reaching out.",
+      "Automate SOC 2 compliance for enterprise sales",
+      "Streamline security reviews and trust building"
+    ]
+  },
+  "quick_facts": [
+    {
+      "label": "Sells to",
+      "text": "Developers and businesses looking for email delivery solutions",
+      "sources": [
+        {
+          "url": "https://www.cbinsights.com/company/resend",
+          "title": "cbinsights.com"
+        }
+      ]
+    },
+    {
+      "label": "Employees",
+      "text": "22 employees",
+      "sources": [
+        {
+          "url": "https://getlatka.com/companies/resend.com",
+          "title": "getlatka.com"
+        }
+      ]
+    },
+    {
+      "label": "Funding",
+      "text": "Series A · $21M raised",
+      "sources": [
+        {
+          "url": "https://pitchbook.com/profiles/company/523161-01",
+          "title": "pitchbook.com"
+        }
+      ]
+    },
+    {
+      "label": "HQ",
+      "text": "San Francisco, California",
+      "sources": [
+        {
+          "url": "https://www.cbinsights.com/company/resend",
+          "title": "cbinsights.com"
+        }
+      ]
+    },
+    {
+      "label": "Hiring",
+      "text": "See their careers page",
+      "url": "https://resend.com/careers"
+    },
+    {
+      "label": "Recent news",
+      "text": "Cloudflare introduced an email service to compete with Resend (October 2025)",
+      "sources": [
+        {
+          "url": "https://www.infoq.com/news/2025/10/cloudflare-email-service",
+          "title": "infoq.com"
+        }
+      ]
+    }
+  ],
+  "social_links": {
+    "linkedin": "https://linkedin.com/company/resend",
+    "youtube": "https://www.youtube.com/channel/UC0FkhoSz2kYqHVBk4L0QYIg"
+  },
+  "couldnt_confirm": [
+    "They may already use Vanta: we saw Vanta named on their site or in search results."
+  ],
+  "details": {
+    "pages": [
+      {
+        "path": "/",
+        "url": "https://resend.com/"
+      },
+      {
+        "path": "/security",
+        "url": "https://resend.com/security"
+      },
+      {
+        "path": "/about",
+        "url": "https://resend.com/about"
+      },
+      {
+        "path": "/customers",
+        "url": "https://resend.com/customers"
+      }
+    ]
+  }
+}

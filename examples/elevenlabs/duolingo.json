@@ -1,0 +1,149 @@
+{
+  "business_name": "Duolingo",
+  "typed_name": null,
+  "reason": null,
+  "seller_key": "elevenlabs",
+  "seller": "ElevenLabs",
+  "mismatch_banner": null,
+  "website_found": "duolingo.com",
+  "domain": "duolingo.com",
+  "site_note": null,
+  "sources_count": 7,
+  "status": "draft_written",
+  "verdict": "Strong fit",
+  "verdict_tone": "strong",
+  "why_line": "They produce educational audio content across 42 languages for learners.",
+  "fit_score": 100,
+  "checklist": [
+    {
+      "status": "pass",
+      "text": "Produces audio or video content"
+    },
+    {
+      "status": "pass",
+      "text": "In a segment ElevenLabs targets (edtech)"
+    },
+    {
+      "status": "pass",
+      "text": "Enough info found about them"
+    },
+    {
+      "status": "pass",
+      "text": "Signal: courses on 42 languages"
+    }
+  ],
+  "category": "Educational technology",
+  "draft": {
+    "angle": "scaling audio and voice generation for courses on 42 languages",
+    "subject": "scaling audio for 42 languages",
+    "body": "Hi there,\n\nDuolingo offers courses on 42 languages for learners worldwide.\n\nProducing listening and speaking audio for that many languages means constant studio recording.\n\nAt ElevenLabs, we help companies generate AI voice and dubbing for audio at scale.\n\nWorth a quick look?\n\nBest,\nElevenLabs team",
+    "fact": "courses on 42 languages",
+    "word_count": 45,
+    "self_check": {
+      "why_this_company": "Duolingo offers courses on 42 languages",
+      "what_problem": "constant studio recording for many languages",
+      "what_offer": "AI voice generation and dubbing at scale",
+      "one_cta": true,
+      "clear_to_stranger": true,
+      "sounds_human": true,
+      "under_70_words": true
+    }
+  },
+  "draft_note": null,
+  "contacts": {
+    "size": "large",
+    "people": [],
+    "look_for": [
+      {
+        "title": "VP of Content",
+        "reason": "VP of Content: owns audio and video content",
+        "linkedin": "https://www.linkedin.com/search/results/people/?keywords=VP+of+Content+Duolingo"
+      },
+      {
+        "title": "VP of Localization",
+        "reason": "VP of Localization: owns dubbing and translation",
+        "linkedin": "https://www.linkedin.com/search/results/people/?keywords=VP+of+Localization+Duolingo"
+      }
+    ]
+  },
+  "talking": {
+    "summary": "They produce audio courses in multiple languages that can benefit from AI voice generation.",
+    "points": [
+      "Offers courses on 42 languages",
+      "Focuses on reading, writing, listening, and speaking skills"
+    ]
+  },
+  "quick_facts": [
+    {
+      "label": "Sells to",
+      "text": "Individuals seeking language learning solutions",
+      "sources": [
+        {
+          "url": "https://www.cbinsights.com/company/duolingo?__hstc=57153973.9c49e44b73bd3bee6fa385653ecd7c96.1633305601290.1633305601291.1633305601292.1&__hssc=57153973.1.1633305601293&__hsfp=487179910",
+          "title": "cbinsights.com"
+        }
+      ]
+    },
+    {
+      "label": "How they make money",
+      "text": "Subscriptions"
+    },
+    {
+      "label": "Employees",
+      "text": "900 employees",
+      "sources": [
+        {
+          "url": "https://www.globaldata.com/company-profile/duolingo-inc",
+          "title": "globaldata.com"
+        }
+      ]
+    },
+    {
+      "label": "Funding",
+      "text": "Public company",
+      "sources": [
+        {
+          "url": "https://quartr.com/insights/edge/keeping-the-streak-alive-the-story-of-duolingo",
+          "title": "quartr.com"
+        }
+      ]
+    },
+    {
+      "label": "HQ",
+      "text": "Pittsburgh, Pennsylvania, the US",
+      "sources": [
+        {
+          "url": "https://www.globaldata.com/company-profile/duolingo-inc",
+          "title": "globaldata.com"
+        }
+      ]
+    },
+    {
+      "label": "Recent news",
+      "text": "Duolingo launched a chess course in 2025",
+      "sources": [
+        {
+          "url": "https://www.freestyle-chess.com/news/freestyle-chess-announces-duolingo-as-official-partner-of-the-grand-slam-south-africa",
+          "title": "freestyle-chess.com"
+        }
+      ]
+    }
+  ],
+  "social_links": {
+    "instagram": "https://www.instagram.com/duolingo",
+    "linkedin": "https://www.linkedin.com/company/duolingo",
+    "youtube": "https://www.youtube.com/user/duolingo",
+    "tiktok": "https://www.tiktok.com/@duolingo"
+  },
+  "couldnt_confirm": [
+    "Only their homepage could be read."
+  ],
+  "details": {
+    "pages": [
+      {
+        "path": "/",
+        "url": "https://www.duolingo.com/"
+      }
+    ]
+  }
+}

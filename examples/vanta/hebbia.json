@@ -1,0 +1,191 @@
+{
+  "business_name": "Hebbia",
+  "typed_name": null,
+  "reason": null,
+  "seller_key": "vanta",
+  "seller": "Vanta",
+  "mismatch_banner": null,
+  "website_found": "hebbia.com",
+  "domain": "hebbia.com",
+  "site_note": null,
+  "sources_count": 8,
+  "status": "draft_written",
+  "verdict": "Possible fit",
+  "verdict_tone": "possible",
+  "why_line": "Already certified (SOC 2 Type 2, ISO 27001): the opening is keeping frameworks current, adding new ones or switching tools, not first-time compliance.",
+  "fit_score": 60,
+  "checklist": [
+    {
+      "status": "pass",
+      "text": "Seed to Series B stage"
+    },
+    {
+      "status": "pass",
+      "text": "Sells to enterprise customers"
+    },
+    {
+      "status": "pass",
+      "text": "Enough info found about them"
+    },
+    {
+      "status": "pass",
+      "text": "Signal: Handles sensitive data (healthcare, insurance, government, HR, data and analytics)"
+    },
+    {
+      "status": "fail",
+      "text": "Already holds SOC 2 Type 2 and ISO 27001",
+      "sr": ""
+    }
+  ],
+  "category": "Artificial intelligence",
+  "draft": {
+    "angle": "Maintaining continuous compliance while expanding integrations with platforms like Datasite.",
+    "subject": "managing data room compliance",
+    "body": "Hi there,\n\nHebbia recently partnered with Datasite to analyze live M&A data room content.\n\nManaging live data rooms requires keeping your SOC 2 and ISO frameworks current.\n\nAt Vanta, we help teams keep security frameworks current and cut audit effort.\n\nOpen to seeing how this works?\n\nBest,\nVanta team",
+    "fact": "announced a partnership with Hebbia",
+    "word_count": 49,
+    "self_check": {
+      "why_this_company": "Hebbia recently integrated with Datasite to access live M&A data room content.",
+      "what_problem": "Analyzing sensitive M&A data requires keeping security frameworks updated with low effort.",
+      "what_offer": "Automate security framework updates and cut audit workload.",
+      "one_cta": true,
+      "clear_to_stranger": true,
+      "sounds_human": true,
+      "under_70_words": true
+    }
+  },
+  "draft_note": null,
+  "existing_customer": false,
+  "contacts": {
+    "size": "mid",
+    "people": [],
+    "look_for": [
+      {
+        "title": "CTO",
+        "reason": "CTO: owns the systems an audit covers",
+        "linkedin": "https://www.linkedin.com/search/results/people/?keywords=CTO+Hebbia"
+      },
+      {
+        "title": "Head of Security",
+        "reason": "Head of Security: owns compliance and security reviews",
+        "linkedin": "https://www.linkedin.com/search/results/people/?keywords=Head+of+Security+Hebbia"
+      }
+    ],
+    "backup": [
+      {
+        "name": "George Sivulka",
+        "title": "Founder and CEO",
+        "email": null,
+        "phone": null,
+        "sources": [
+          {
+            "url": "https://en.wikipedia.org/wiki/Hebbia",
+            "title": "en.wikipedia.org"
+          }
+        ],
+        "reason": "Founder and CEO: signs off at the end, not the first contact",
+        "linkedin": "https://www.linkedin.com/search/results/people/?keywords=George+Sivulka+Hebbia"
+      }
+    ]
+  },
+  "talking": {
+    "summary": "Already certified: talk upkeep, new frameworks or switching tools",
+    "points": [
+      "Already holds SOC 2 and ISO 27001: talk upkeep and new frameworks, not a first audit.",
+      "Serve Fortune 500 companies",
+      "Handle sensitive financial data"
+    ]
+  },
+  "quick_facts": [
+    {
+      "label": "Sells to",
+      "text": "Investment banks and asset managers",
+      "sources": [
+        {
+          "url": "https://www.linkedin.com/company/hebbia",
+          "title": "linkedin.com"
+        }
+      ]
+    },
+    {
+      "label": "Employees",
+      "text": "120 employees",
+      "sources": [
+        {
+          "url": "https://www.builtinnyc.com/company/hebbia-ai",
+          "title": "builtinnyc.com"
+        }
+      ]
+    },
+    {
+      "label": "Funding",
+      "text": "Series B · $130M raised · $700M valuation",
+      "sources": [
+        {
+          "url": "https://techcrunch.com/2024/07/09/ai-startup-hebbia-rased-130m-at-a-700m-valuation-on-13-million-of-profitable-revenue",
+          "title": "techcrunch.com"
+        }
+      ]
+    },
+    {
+      "label": "HQ",
+      "text": "New York City, US",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Hebbia",
+          "title": "en.wikipedia.org"
+        }
+      ]
+    },
+    {
+      "label": "Hiring",
+      "text": "See their careers page",
+      "url": "https://www.hebbia.com/careers/"
+    },
+    {
+      "label": "Recent news",
+      "text": "Datasite partnered with Hebbia to accelerate AI-powered due diligence (October 2026)",
+      "sources": [
+        {
+          "url": "https://finance.yahoo.com/technology/ai/articles/datasite-partners-hebbia-accelerate-ai-130000111.html",
+          "title": "finance.yahoo.com"
+        }
+      ]
+    },
+    {
+      "label": "Recent news",
+      "text": "Hebbia integrated with Preqin (August 2026)",
+      "sources": [
+        {
+          "url": "https://www.hebbia.com/blog/hebbia-preqin-integration",
+          "title": "hebbia.com"
+        }
+      ]
+    }
+  ],
+  "social_links": {
+    "linkedin": "https://www.linkedin.com/company/hebbia/",
+    "youtube": "https://www.youtube.com/@HebbiaAI"
+  },
+  "couldnt_confirm": [],
+  "details": {
+    "pages": [
+      {
+        "path": "/",
+        "url": "https://www.hebbia.com/"
+      },
+      {
+        "path": "/security",
+        "url": "https://www.hebbia.com/security"
+      },
+      {
+        "path": "/about/",
+        "url": "https://www.hebbia.com/about/"
+      },
+      {
+        "path": "/product/",
+        "url": "https://www.hebbia.com/product/"
+      }
+    ]
+  }
+}

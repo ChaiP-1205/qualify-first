@@ -1,0 +1,8 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+usage_counter.json
+tavily_counter.json
+examples_tavily_counter.json
+examples_usage_counter.json

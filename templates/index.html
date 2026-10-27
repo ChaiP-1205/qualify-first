@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qualify First</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230F766E%27/%3E%3Cpath d=%27M9 16.5l4.5 4.5L23 11.5%27 fill=%27none%27 stroke=%27white%27 stroke-width=%273.2%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0F766E; --teal-dark: #0B5F58; --teal-bg: #E6F4F2; --teal-line: #A7D7D1; --mint: #CCFBF1;
+    --ink: #18181B; --muted: #52525B; --line: #E4E4E7; --bg: #F7F7F9; --card: #FFFFFF;
+    --amber: #B45309; --amber-ink: #92400E; --amber-bg: #FFFBEB; --amber-line: #F3C98B; --amber-dot: #D97706;
+    --grey: #52525B; --grey-bg: #F4F4F5; --grey-line: #D4D4D8; --grey-dot: #8A8A94;
+    --error-bg: #FEF3F2; --error-ink: #B42318; --error-line: #F4C7C3;
+    --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px;
+    --radius: 14px; --max: 1120px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  /* a short page keeps the footer at the bottom of the window; a long one puts it after the content */
+  body { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
+  a { color: var(--teal); }
+  button, input, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--s2); }
+
+  /* ---- header ---- */
+  .site-header { background: var(--teal); color: #fff; }
+  .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); padding-top: 14px; padding-bottom: 14px; }
+  .brand { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 14px; min-width: 0; }
+  .brand h1 { margin: 0; font: 800 20px/1.2 "Plus Jakarta Sans", Inter, sans-serif; letter-spacing: -.01em; color: #fff; }
+  .brand p { margin: 0; font-size: 14px; color: var(--mint); }
+  .hire { flex: 0 0 auto; padding: 8px 16px; border-radius: 999px; background: #fff; color: var(--teal); font-weight: 600; font-size: 14px; text-decoration: none; white-space: nowrap; }
+  .hire:hover { background: var(--mint); }
+  .site-header :focus-visible { outline-color: #fff; }
+
+  main.wrap { padding-top: var(--s3); padding-bottom: var(--s4); flex: 1 0 auto; width: 100%; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--s3); min-width: 0; }
+  @media (max-width: 480px) { .card { padding: var(--s2); } }
+
+  /* ---- search card ---- */
+  .search-row { display: flex; gap: var(--s1); }
+  .search-row input { flex: 1 1 auto; min-width: 0; height: 48px; padding: 0 14px; border: 1px solid #C9C9D1; border-radius: 10px; background: #fff; font-size: 16px; }
+  .search-row input::placeholder, .details input::placeholder, .details textarea::placeholder { color: #71717A; }
+  .search-row input:focus-visible, .details input:focus-visible, .details textarea:focus-visible { outline-offset: 0; border-color: var(--teal); }
+  .btn { height: 48px; padding: 0 22px; border-radius: 10px; font-weight: 600; border: 1px solid transparent; }
+  .btn-primary { background: var(--teal); color: #fff; }
+  .btn-primary:hover { background: var(--teal-dark); }
+  .btn-primary:disabled { opacity: .75; cursor: wait; }
+  .btn-ghost { background: #fff; color: var(--ink); border-color: #C9C9D1; }
+  .btn-ghost:hover { background: var(--grey-bg); }
+  @media (max-width: 560px) {
+    .search-row { flex-wrap: wrap; }
+    .search-row input { flex-basis: 100%; }
+    .search-row .btn { flex: 1 1 0; }
+  }
+  .checks-left { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
+  .fit-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s1) var(--s2); margin-top: var(--s2); font-size: 14px; color: var(--muted); }
+  .seller-pick { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1) 10px; }
+  .seller-pick .label { font-weight: 600; color: var(--ink); }
+  .seller-chips { display: inline-flex; flex-wrap: nowrap; gap: var(--s1); }
+  @media (max-width: 480px) {
+    /* the two seller chips stay on one line; "See the ICP" goes on the next */
+    .seller-pick #toggle-icp { flex-basis: 100%; text-align: left; }
+    .seller-chip { padding: 6px 14px; }
+  }
+  .seller-chip { padding: 6px 16px; border-radius: 999px; border: 1px solid var(--grey-line); background: #fff; color: var(--ink); font-size: 14px; font-weight: 600; transition: background-color .15s ease, color .15s ease, border-color .15s ease; }
+  .seller-chip:hover { border-color: var(--teal); }
+  .seller-chip[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .seller-chip:disabled { cursor: wait; }
+  .sample-note { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
+  .icp { margin-top: var(--s2); padding: var(--s2); border: 1px solid var(--teal-line); border-left: 4px solid var(--teal); border-radius: 10px; background: var(--teal-bg); }
+  .icp[hidden] { display: none; }
+  .icp h2 { margin: 0 0 var(--s1); font-size: 16px; font-weight: 700; }
+  .icp dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 6px var(--s2); font-size: 15px; }
+  .icp dt { font-weight: 600; color: var(--teal-dark); }
+  .icp dd { margin: 0; }
+  @media (max-width: 480px) { .icp dl { grid-template-columns: 1fr; gap: 0; } .icp dd { margin-bottom: var(--s1); } }
+  .link-btn { padding: 0; border: 0; background: none; color: var(--teal); text-decoration: underline; text-underline-offset: 2px; font-size: inherit; font-weight: 500; }
+  .link-btn.plain { text-decoration: none; font-weight: 600; }
+  .inline-error { margin: 6px 0 0; font-size: 14px; color: var(--error-ink); }
+
+  .details { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2) var(--s3); margin-top: var(--s2); padding-top: var(--s2); border-top: 1px solid var(--line); }
+  @media (max-width: 720px) { .details { grid-template-columns: 1fr; } }
+  .details[hidden] { display: none; }
+  .field label { display: block; font-weight: 600; font-size: 14px; }
+  .field input, .field textarea { display: block; width: 100%; margin-top: 6px; padding: 10px 12px; border: 1px solid #C9C9D1; border-radius: 8px; background: #fff; }
+  .field textarea { min-height: 76px; resize: vertical; }
+  .hint { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+  .char-count { margin: 4px 0 0; font-size: 13px; color: var(--muted); text-align: right; }
+
+  .chips-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1); margin-top: var(--s2); }
+  .chips-row .try { font-size: 14px; font-weight: 600; color: var(--muted); }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-size: 14px; font-weight: 500; color: var(--ink); transition: transform .15s ease, box-shadow .15s ease; }
+  .chip:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+  .chip .dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 9px; }
+  .chip .sep { color: var(--muted); }
+  .chip.strong { background: var(--teal-bg); border-color: var(--teal-line); } .chip.strong .dot { background: var(--teal); }
+  .chip.possible { background: var(--amber-bg); border-color: var(--amber-line); } .chip.possible .dot { background: var(--amber-dot); }
+  .chip.poor { background: var(--grey-bg); border-color: var(--grey-line); } .chip.poor .dot { background: var(--grey-dot); }
+  .chip.unknown { background: #fff; border: 1px dashed var(--amber-dot); } .chip.unknown .dot { background: var(--amber-dot); }
+  .chip.customer { background: #F1F6F5; border-color: #C5D9D6; } .chip.customer .dot { background: #5E8C87; }
+
+  /* ---- results ---- */
+  .results { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--s3); margin-top: var(--s3); align-items: start; }
+  .results.single { grid-template-columns: minmax(0, 1fr); }
+  @media (max-width: 860px) { .results { grid-template-columns: minmax(0, 1fr); } }
+  .fade-in { animation: fade-in .35s ease-out both; }
+  @keyframes fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .placeholder { margin: 0; color: var(--muted); }
+  .stage { margin: 0; font-weight: 600; }
+  .stage-sub { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+
+  .top-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+  .top-line h2 { margin: 0; font-size: 18px; font-weight: 700; word-break: break-word; }
+  .tag { padding: 2px 10px; font-size: 13px; color: var(--muted); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; }
+  .domain { font-size: 13px; color: var(--muted); }
+  .typed { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+  .verdict-line { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); margin-top: var(--s2); }
+  .verdict { margin: 0; font-size: 28px; line-height: 1.2; font-weight: 700; }
+  .verdict.strong { color: var(--teal); }
+  .verdict.possible, .verdict.unknown { color: var(--amber); }
+  .verdict.poor { color: var(--grey); }
+  .ring { flex: 0 0 48px; width: 48px; height: 48px; }
+  .ring circle { fill: none; stroke-width: 4; }
+  .ring .track { stroke: var(--line); }
+  .ring .arc { stroke: var(--teal); stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dashoffset .9s ease-out; }
+  .ring text { font: 700 14px Inter, sans-serif; fill: var(--ink); }
+  .why { margin: var(--s1) 0 0; font-size: 17px; }
+  .checks { margin: var(--s2) 0 0; padding: 0; list-style: none; font-size: 15px; }
+  .checks li { display: flex; gap: var(--s1); align-items: baseline; }
+  .checks li + li { margin-top: 4px; }
+  .checks .icon { flex: 0 0 18px; font-weight: 700; text-align: center; }
+  .checks .pass .icon { color: var(--teal); }
+  .checks .partial .icon { color: var(--amber-dot); }
+  .checks .fail { color: var(--muted); }
+  .checks .fail .icon { color: var(--grey-dot); }
+  .scored { margin: var(--s2) 0 0; font-size: 14px; color: var(--muted); }
+  .note-unused { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+
+  .fold { margin-top: var(--s2); border-top: 1px solid var(--line); }
+  .fold:first-of-type { margin-top: var(--s3); }
+  .fold summary { display: flex; align-items: baseline; gap: 6px; padding: 12px 0 0; cursor: pointer; font-weight: 600; list-style: none; }
+  .fold summary::-webkit-details-marker { display: none; }
+  .fold summary::before { content: "▸"; flex: 0 0 12px; color: var(--muted); }
+  .fold[open] summary::before { content: "▾"; }
+  .fold .title { flex: 0 0 auto; white-space: nowrap; }
+  .fold .preview { flex: 1 1 auto; font-weight: 400; color: var(--muted); font-size: 14px; min-width: 0; }
+  .fold .body { padding: var(--s1) 0 0 18px; font-size: 15px; }
+  .fold .body p { margin: 0; }
+  .fold .body p + p, .fold .body p + ul { margin-top: var(--s1); }
+  .fold ul { margin: 0; padding-left: 18px; }
+  .fold li + li { margin-top: 4px; }
+  .contact-list { margin: 0; padding-left: 22px; }
+  .contact-list li { word-break: break-word; }
+  .contact-list .reason { color: var(--muted); margin-left: 6px; }
+  .contact-list .find { margin-left: 8px; font-size: 13px; white-space: nowrap; }
+  .look-head + .contact-list { margin-top: 4px; }
+  .look-head:first-child { margin-top: 0 !important; }
+  .source { font-size: 13px; color: var(--muted); }
+  .facts { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 6px var(--s2); }
+  .facts dt { font-weight: 600; }
+  .facts dd { margin: 0; word-break: break-word; }
+  @media (max-width: 480px) { .facts { grid-template-columns: 1fr; gap: 0; } .facts dd { margin-bottom: var(--s1); } }
+  .pages li { word-break: break-all; }
+
+  .draft-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); }
+  .draft-head h2 { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: .08em; color: var(--muted); }
+  .copy-btn { padding: 6px 14px; font-size: 14px; font-weight: 600; border-radius: 8px; border: 1px solid #C9C9D1; background: #fff; transition: background-color .15s ease, color .15s ease, border-color .15s ease; }
+  .copy-btn:hover { background: var(--grey-bg); }
+  .copy-btn.copied { background: var(--teal-bg); color: var(--teal-dark); border-color: var(--teal-line); }
+  .angle { margin: var(--s2) 0 0; font-size: 15px; }
+  .email { margin-top: var(--s2); padding: var(--s2); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; line-height: 1.6; }
+  .email .subject { margin: 0 0 var(--s2); font-weight: 600; }
+  .email .body { margin: 0; white-space: pre-line; word-break: break-word; }
+  .muted { color: var(--muted); }
+
+  .notice { margin: var(--s2) 0 0; padding: 12px var(--s2); border-radius: 10px; background: var(--amber-bg); color: var(--amber-ink); border: 1px solid var(--amber-line); }
+  .notice p { margin: 0; }
+  .notice p + p { margin-top: 6px; }
+  .notice a { color: var(--amber-ink); font-weight: 600; }
+  .error { margin: 0; padding: 12px var(--s2); border-radius: 10px; background: var(--error-bg); color: var(--error-ink); border: 1px solid var(--error-line); }
+  .retry { margin-top: var(--s2); }
+  .options { display: flex; flex-direction: column; gap: var(--s1); margin-top: var(--s2); }
+  .option { text-align: left; padding: 10px 14px; border-radius: 10px; border: 1px solid #C9C9D1; background: #fff; font-size: 15px; }
+  .option:hover { border-color: var(--teal); background: var(--teal-bg); }
+  .todo { margin: var(--s2) 0 0; padding-left: 20px; font-size: 15px; color: var(--muted); }
+  .paste-head { margin: 0; font-size: 18px; font-weight: 700; }
+  .paste-row { display: flex; gap: var(--s1); margin-top: var(--s2); }
+  .paste-row input { flex: 1 1 auto; min-width: 0; height: 48px; padding: 0 14px; border: 1px solid #C9C9D1; border-radius: 10px; font-size: 16px; }
+  .paste-row input:focus-visible { outline-offset: 0; border-color: var(--teal); }
+  .look-head { margin-top: var(--s2) !important; font-weight: 600; }
+  .find { font-size: 14px; }
+
+  /* ---- footer ---- */
+  .site-footer { margin-top: var(--s2); background: #fff; border-top: 1px solid var(--line); }
+  .site-footer .wrap { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--s2) var(--s4); padding-top: var(--s3); padding-bottom: var(--s3); font-size: 14px; }
+  .site-footer p { margin: 0; }
+  .site-footer p + p { margin-top: 4px; }
+  .foot-right { text-align: right; }
+  .foot-right .talk { font-weight: 700; color: var(--teal); text-decoration: none; }
+  .foot-right .talk:hover { text-decoration: underline; }
+  .copyright { color: var(--muted); }
+  /* 28px, with negative vertical margins so the line (and the footer) doesn't grow */
+  .cup { display: inline-block; width: 28px; height: 28px; margin: -8px 0 -8px 4px; vertical-align: middle; }
+  .cup path { fill: none; stroke: var(--teal); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .cup .steam { animation: steam 2.4s ease-in-out infinite; opacity: 0; }
+  .cup .steam:nth-of-type(2) { animation-delay: .8s; }
+  .cup .steam:nth-of-type(3) { animation-delay: 1.6s; }
+  @keyframes steam { 0% { opacity: 0; transform: translateY(2px); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(-3px); } }
+  @media (max-width: 640px) { .site-footer .wrap { flex-direction: column; } .foot-right { text-align: left; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .cup .steam { opacity: 1; }
+    .chip:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand">
+      <h1>Qualify First</h1>
+      <p>Know if a lead is worth it before you write a word.</p>
+    </div>
+    <a class="hire" href="{{ linkedin_url }}" target="_blank" rel="noopener noreferrer">Hire the builder →</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <form id="lead-form" class="card" novalidate>
+    <div class="search-row">
+      <label for="q" class="sr-only">Company name or website</label>
+      <input id="q" name="business_name" maxlength="200" autocomplete="off" placeholder="Type any company name or website"
+             aria-describedby="checks-left">
+      <button id="submit" class="btn btn-primary" type="submit">Check</button>
+      <button id="clear" class="btn btn-ghost" type="button">Clear</button>
+    </div>
+    <p id="q-error" class="inline-error" hidden>Add a company name or website.</p>
+    <p id="checks-left" class="checks-left"></p>
+
+    <div class="fit-row">
+      <div class="seller-pick" role="group" aria-labelledby="seller-label">
+        <span id="seller-label" class="label">Checking fit for:</span>
+        <span class="seller-chips">{% for key, s in sellers.items() %}<button class="seller-chip" type="button" data-seller="{{ key }}" aria-pressed="false">{{ s.name }}</button>{% endfor %}</span>
+        <button id="toggle-icp" class="link-btn" type="button" aria-expanded="false" aria-controls="icp">See the ICP →</button>
+      </div>
+      <button id="toggle-details" class="link-btn plain" type="button" aria-expanded="false" aria-controls="details">+ Add details (optional)</button>
+    </div>
+    <p class="sample-note">ElevenLabs and Vanta are sample sellers. Not affiliated with either.</p>
+
+    <section id="icp" class="icp" hidden aria-labelledby="icp-title">
+      <h2 id="icp-title"></h2>
+      <dl id="icp-lines"></dl>
+    </section>
+
+    <div id="details" class="details" hidden>
+      <div class="field">
+        <label for="url">Company website</label>
+        <input id="url" name="url" inputmode="url" placeholder="example.com" maxlength="2048" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="notes">What you know about this company (optional)</label>
+        <textarea id="notes" name="notes" maxlength="2000" aria-describedby="notes-hint"></textarea>
+        <p id="notes-hint" class="hint">e.g. met at a conference, they're hiring, mentioned budget concerns. This shapes the email outreach.</p>
+      </div>
+    </div>
+
+    <div class="chips-row" id="chips">
+      <span class="try">Try:</span>
+    </div>
+  </form>
+
+  <div id="results" class="results single" aria-live="polite">
+    <div class="card"><p class="placeholder">Your result will show up here.</p></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <p>Designed and built by Chaitrali Patne, one cup of chai at a time<svg class="cup" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path class="steam" d="M8 7c-1-1.2 1-2.2 0-3.6"/>
+        <path class="steam" d="M11.5 7c-1-1.2 1-2.2 0-3.6"/>
+        <path class="steam" d="M15 7c-1-1.2 1-2.2 0-3.6"/>
+        <path d="M5 10h13v4.5a5 5 0 0 1-5 5h-3a5 5 0 0 1-5-5z"/>
+        <path d="M18 11.5h1.2a2.3 2.3 0 0 1 0 4.6H17.6"/>
+      </svg></p>
+      <p class="copyright">© 2026 Chaitrali Patne. All rights reserved.</p>
+    </div>
+    <div class="foot-right">
+      <p><a class="talk" href="{{ linkedin_url }}" target="_blank" rel="noopener noreferrer">Hiring a GTM engineer, or want this for your team? Let's talk →</a></p>
+      <p><a href="{{ github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    </div>
+  </div>
+</footer>
+
+<script id="examples-data" type="application/json">{{ examples|tojson }}</script>
+<script id="sellers-data" type="application/json">{{ sellers|tojson }}</script>
+<script>
+const EXAMPLES = JSON.parse(document.getElementById('examples-data').textContent);  // {seller: [saved results]}
+const SELLERS = JSON.parse(document.getElementById('sellers-data').textContent);    // {seller: ICP card}
+const DEFAULT_SELLER = {{ default_seller|tojson }};
+const LINKEDIN_URL = {{ linkedin_url|tojson }};
+const CHECKS_PER_DAY = {{ checks_per_day }};
+const TONE_LABEL = { strong: 'Strong fit', possible: 'Possible fit', poor: 'Not a fit', unknown: "Can't tell yet",
+                     customer: 'Already a customer' };
+const CHECK_ICONS = { pass: '✓', partial: '?', fail: '✗' };
+const CHECK_SR = { pass: 'Yes: ', partial: 'Not sure: ', fail: 'No: ' };
+const STAGES = ['Finding the company…', 'Reading their site…', 'Judging fit…', 'Writing the draft…'];
+const LIVE_STAGE_AT = [0, 8, 20, 35];  // seconds into a live run
+const SAVED_RUN_MS = 8500;              // a saved result plays the same stages over 7-10 seconds
+
+const form = document.getElementById('lead-form');
+const q = document.getElementById('q');
+const urlInput = document.getElementById('url');
+const notesInput = document.getElementById('notes');
+const btn = document.getElementById('submit');
+const results = document.getElementById('results');
+const details = document.getElementById('details');
+const toggle = document.getElementById('toggle-details');
+const checksLeft = document.getElementById('checks-left');
+let urlAutoFilled = false;  // the website field was filled by a chip, an option or an earlier run, not typed
+
+// Everything below uses textContent, never innerHTML: scraped and model text is untrusted.
+function el(tag, cls, text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text !== undefined && text !== null) n.textContent = text;
+  return n;
+}
+function button(cls, text, onClick) {
+  const b = el('button', cls, text);
+  b.type = 'button';
+  b.addEventListener('click', onClick);
+  return b;
+}
+function extLink(text, url) {
+  const a = el('a', null, text);
+  a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+  return a;
+}
+function sourceLinks(sources) {
+  const span = el('span', 'source');
+  (sources || []).slice(0, 1).forEach(s => { span.append(document.createTextNode(' · '), extLink(s.title || 'source', s.url)); });
+  return span;
+}
+
+// ---- form ----
+function setChecksLeft(n) {
+  if (typeof n !== 'number') return;
+  checksLeft.textContent = n + ' of ' + CHECKS_PER_DAY + ' free checks left today';
+}
+setChecksLeft({{ checks_left }});
+
+function openDetails(focusEl) {
+  details.hidden = false;
+  toggle.setAttribute('aria-expanded', 'true');
+  toggle.textContent = '− Hide details';
+  if (focusEl) { focusEl.focus(); focusEl.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+}
+function closeDetails() {
+  details.hidden = true;
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.textContent = '+ Add details (optional)';
+}
+toggle.addEventListener('click', () => (details.hidden ? openDetails() : closeDetails()));
+
+// ---- seller toggle and ICP card ----
+let seller = DEFAULT_SELLER;
+let shown = null;  // {name, url, notes} of the result on screen; a seller switch re-checks it
+const sellerChips = [...document.querySelectorAll('.seller-chip')];
+const icp = document.getElementById('icp');
+const icpToggle = document.getElementById('toggle-icp');
+
+function renderIcp() {
+  const s = SELLERS[seller];
+  document.getElementById('icp-title').textContent = s.name + "'s ICP";
+  const dl = document.getElementById('icp-lines');
+  dl.replaceChildren();
+  s.lines.forEach(([label, text]) => dl.append(el('dt', null, label), el('dd', null, text)));
+}
+function setIcpOpen(open) {
+  icp.hidden = !open;
+  icpToggle.setAttribute('aria-expanded', String(open));
+  icpToggle.textContent = open ? 'Hide the ICP' : 'See the ICP →';
+}
+icpToggle.addEventListener('click', () => setIcpOpen(icp.hidden));
+function openIcp() {
+  setIcpOpen(true);
+  icp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function setSeller(key) {
+  seller = key;
+  sellerChips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.seller === key)));
+  renderIcp();
+  renderChips();
+}
+sellerChips.forEach(c => c.addEventListener('click', () => {
+  if (btn.disabled || c.dataset.seller === seller) return;
+  setSeller(c.dataset.seller);
+  if (!shown) return;
+  // The result on screen was scored against the other seller: show this seller's saved one, else check it live.
+  const ex = savedFor(shown.name, shown.url);
+  if (ex) { playSaved(ex); return; }
+  q.value = shown.name; urlInput.value = shown.url; notesInput.value = shown.notes;
+  form.requestSubmit();
+}));
+
+// The saved result for this company and the selected seller, unless a website was added (it may be a
+// different company). A note is ignored: a chip company always shows its saved result, even at 0 checks left.
+function savedFor(name, url) {
+  if (url) return null;
+  const key = name.trim().toLowerCase();
+  return (EXAMPLES[seller] || []).find(ex => ex.name.toLowerCase() === key) || null;
+}
+
+q.addEventListener('input', () => {
+  document.getElementById('q-error').hidden = true;
+  q.removeAttribute('aria-invalid');
+  if (urlAutoFilled) { urlInput.value = ''; urlAutoFilled = false; }
+});
+urlInput.addEventListener('input', () => { urlAutoFilled = false; });
+form.querySelectorAll('textarea').forEach(t => t.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) form.requestSubmit();
+}));
+
+document.getElementById('clear').addEventListener('click', () => {
+  cancelSaved();
+  form.reset();
+  urlAutoFilled = false;
+  document.getElementById('q-error').hidden = true;
+  q.removeAttribute('aria-invalid');
+  closeDetails();
+  setSeller(DEFAULT_SELLER);
+  setIcpOpen(false);
+  shown = null;
+  results.className = 'results single';
+  results.replaceChildren(card(el('p', 'placeholder', 'Your result will show up here.')));
+  q.focus();
+});
+
+// ---- chips: saved real results for the selected seller, labelled with their saved verdict ----
+const chipsRow = document.getElementById('chips');
+function renderChips() {
+  chipsRow.replaceChildren(el('span', 'try', 'Try:'));
+  (EXAMPLES[seller] || []).forEach(ex => {
+    const tone = ex.result.existing_customer ? 'customer' : (ex.result.verdict_tone || 'unknown');
+    const chip = el('button', 'chip ' + tone);
+    chip.type = 'button';
+    chip.append(el('span', 'dot'), el('span', null, ex.name), el('span', 'sep', '·'), el('span', null, TONE_LABEL[tone] || ex.result.verdict));
+    chip.addEventListener('click', () => {
+      if (btn.disabled) return;
+      q.value = ex.name;
+      urlInput.value = '';
+      urlAutoFilled = false;
+      playSaved(ex);
+    });
+    chipsRow.append(chip);
+  });
+}
+setSeller(DEFAULT_SELLER);
+
+// ---- rendering ----
+function card(...children) {
+  const c = el('div', 'card');
+  c.append(...children);
+  return c;
+}
+function show(cards, single) {
+  results.className = 'results' + (single ? ' single' : '');
+  const nodes = cards.map(c => { c.classList.add('fade-in'); return c; });
+  results.replaceChildren(...nodes);
+  if (window.innerWidth < 860) results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function scoreRing(score) {
+  const ns = 'http://www.w3.org/2000/svg';
+  const C = 2 * Math.PI * 20;
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('class', 'ring'); svg.setAttribute('viewBox', '0 0 48 48');
+  svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', 'Fit score ' + score + ' out of 100');
+  const circle = (cls) => {
+    const c = document.createElementNS(ns, 'circle');
+    c.setAttribute('class', cls); c.setAttribute('cx', '24'); c.setAttribute('cy', '24'); c.setAttribute('r', '20');
+    return c;
+  };
+  const arc = circle('arc');
+  arc.style.strokeDasharray = C;
+  arc.style.strokeDashoffset = C;
+  const text = document.createElementNS(ns, 'text');
+  text.setAttribute('x', '24'); text.setAttribute('y', '24'); text.setAttribute('text-anchor', 'middle');
+  text.setAttribute('dominant-baseline', 'central');
+  text.textContent = score;
+  svg.append(circle('track'), arc, text);
+  requestAnimationFrame(() => requestAnimationFrame(() => { arc.style.strokeDashoffset = C * (1 - score / 100); }));
+  return svg;
+}
+
+function topLine(d) {
+  const frag = document.createDocumentFragment();
+  const row = el('div', 'top-line');
+  row.append(el('h2', null, d.business_name));
+  if (d.category) row.append(el('span', 'tag', d.category));
+  if (d.domain) row.append(el('span', 'domain', d.domain));
+  frag.append(row);
+  if (d.typed_name && d.typed_name.toLowerCase() !== (d.business_name || '').toLowerCase()) {
+    frag.append(el('p', 'typed', 'You typed: ' + d.typed_name));
+  }
+  return frag;
+}
+
+function verdictLine(d, showRing) {
+  const line = el('div', 'verdict-line');
+  line.append(el('p', 'verdict ' + (d.verdict_tone || 'unknown'), d.verdict));
+  if (showRing && d.fit_score !== null && d.fit_score !== undefined) line.append(scoreRing(d.fit_score));
+  return line;
+}
+
+function checklist(items) {
+  const ul = el('ul', 'checks');
+  (items || []).forEach(c => {
+    const li = el('li', c.status);
+    const icon = el('span', 'icon', CHECK_ICONS[c.status] || '?');
+    icon.setAttribute('aria-hidden', 'true');
+    const sr = c.sr !== undefined ? c.sr : (CHECK_SR[c.status] || '');  // a line can set its own spoken prefix
+    li.append(icon, el('span', 'sr-only', sr), document.createTextNode(c.text));
+    ul.append(li);
+  });
+  return ul;
+}
+
+function fold(title, preview, ...children) {
+  const det = el('details', 'fold');
+  const sum = el('summary');
+  sum.append(el('span', 'title', title));
+  if (preview) sum.append(el('span', 'preview', '· ' + preview));
+  const body = el('div', 'body');
+  body.append(...children);
+  det.append(sum, body);
+  return det;
+}
+
+function findLink(url) {
+  const a = extLink('Find on LinkedIn', url);
+  a.className = 'find';
+  return a;
+}
+function contactFold(c) {
+  const people = c.people || [];
+  // Older saved results list titles as plain strings; newer ones carry a reason and a link.
+  const look = (c.look_for || []).map(t => (typeof t === 'string' ? { title: t } : t));
+  const backup = c.backup || [];
+  const list = el('div');
+  // One line each: who in bold, why in muted text, the LinkedIn link small at the end.
+  const item = (label, title, reason, linkedin, sources, reach) => {
+    const li = el('li');
+    li.append(el('strong', null, label));
+    if (sources && sources.length) li.append(sourceLinks(sources));
+    // "CTO: owns the systems an audit covers" -> "owns the systems ...": the title is already in bold
+    const why = reason && title && reason.startsWith(title + ':') ? reason.slice(title.length + 1).trim() : reason;
+    if (why) li.append(el('span', 'reason', why));
+    if (reach.length) li.append(el('span', 'reason', reach.join(' · ')));
+    if (linkedin) li.append(findLink(linkedin));
+    return li;
+  };
+  const person = p => item(p.name + (p.title ? ', ' + p.title : ''), p.title, p.reason, p.linkedin, p.sources,
+                           [p.email, p.phone].filter(Boolean));
+  const role = t => item(t.title, t.title, t.reason, t.linkedin, null, []);
+  const section = (heading, items) => {
+    if (!items.length) return;
+    if (heading) list.append(el('p', 'look-head', heading));
+    const ol = el('ol', 'contact-list');
+    ol.append(...items);
+    list.append(ol);
+  };
+  const noOne = 'No named decision-maker found. Look for these roles:';
+  if (c.size === 'mid' || backup.length) {  // 30-200 staff: the functional roles, then the founder as backup
+    section(people.length || backup.length ? 'Start with' : noOne, [...people.map(person), ...look.map(role)]);
+    section('Backup', backup.map(person));
+  } else {
+    section(null, people.map(person));
+    section(people.length ? 'Or look for:' : noOne, look.map(role));
+  }
+  const preview = people.length ? people.length + (people.length === 1 ? ' person found' : ' people found')
+                                : (look.length ? 'titles to look for' : 'none listed');
+  return fold('Who to contact', preview, list);
+}
+
+function factsFold(d) {
+  const facts = d.quick_facts || [];
+  const links = Object.entries(d.social_links || {});
+  if (!facts.length && !links.length) return null;
+  const dl = el('dl', 'facts');
+  facts.forEach(f => {
+    const dd = el('dd');
+    if (f.url) dd.append(extLink(f.text, f.url)); else dd.textContent = f.text;
+    if (f.sources && f.sources.length) dd.append(sourceLinks(f.sources));
+    dl.append(el('dt', null, f.label), dd);
+  });
+  const names = { facebook: 'Facebook', instagram: 'Instagram', youtube: 'YouTube', linkedin: 'LinkedIn', tiktok: 'TikTok' };
+  if (links.length) {
+    const dd = el('dd');
+    links.forEach(([platform, url], i) => { if (i) dd.append(document.createTextNode(' · ')); dd.append(extLink(names[platform] || platform, url)); });
+    dl.append(el('dt', null, 'Links'), dd);
+  }
+  const labels = facts.map(f => f.label).concat(links.length ? ['Links'] : []);
+  return fold('Quick facts', [...new Set(labels)].join(', '), dl);
+}
+
+function pagesFold(info) {
+  const pages = (info && info.pages) || [];
+  if (!pages.length) return null;
+  const ul = el('ul', 'pages');
+  pages.forEach(p => { const li = el('li'); li.append(extLink(p.path, p.url)); ul.append(li); });
+  return fold('Pages we read', String(pages.length), ul);
+}
+
+// "Scored against Vanta's ICP", the ICP part opening the card it was scored against.
+function scoredLine(d) {
+  const p = el('p', 'scored');
+  const s = SELLERS[d.seller_key] || SELLERS[seller];
+  p.append(document.createTextNode('Scored against '), button('link-btn', s.name + "'s ICP", openIcp));
+  return p;
+}
+
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); return true; }
+  catch (e) {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+      return true;
+    } catch (e2) { return false; }
+  }
+}
+
+function draftCard(d) {
+  const c = el('div', 'card');
+  const head = el('div', 'draft-head');
+  head.append(el('h2', null, 'OUTREACH DRAFT'));
+  c.append(head);
+  if (d.status === 'poor_fit') { c.append(el('p', 'angle muted', 'Not a fit, so no message written.')); return c; }
+  const draft = d.draft;
+  if (!draft) { c.append(el('p', 'angle muted', d.draft_note || 'No draft written.')); return c; }
+  const copy = button('copy-btn', 'Copy email', async () => {
+    const ok = await copyText('Subject: ' + draft.subject + '\n\n' + draft.body);
+    copy.textContent = ok ? 'Copied ✓' : 'Copy failed';
+    copy.classList.toggle('copied', ok);
+    setTimeout(() => { copy.textContent = 'Copy email'; copy.classList.remove('copied'); }, 2000);
+  });
+  head.append(copy);
+  if (draft.angle) {
+    const angle = el('p', 'angle');
+    angle.append(el('strong', null, 'Angle: '), document.createTextNode(draft.angle));
+    c.append(angle);
+  }
+  const box = el('div', 'email');
+  box.append(el('p', 'subject', 'Subject: ' + draft.subject), el('p', 'body', draft.body));
+  c.append(box);
+  return c;
+}
+
+function verdictCard(d, notes) {
+  const c = el('div', 'card');
+  const fit = d.status === 'draft_written';
+  c.append(topLine(d), verdictLine(d, fit));
+  // A note typed in, and no email to shape: say so, so the visitor doesn't think it changed the verdict.
+  if ((notes || '').trim() && d.status === 'poor_fit' && !d.draft) {
+    c.append(el('p', 'note-unused', "Your note wasn't used: notes only shape the email, not the verdict."));
+  }
+  if (d.why_line) c.append(el('p', 'why', d.why_line));
+  if (d.checklist && d.checklist.length) c.append(checklist(d.checklist));
+  c.append(scoredLine(d));
+  if (d.contacts && d.status !== 'poor_fit') c.append(contactFold(d.contacts));
+  if (d.talking && (d.talking.points || []).length) {
+    const parts = [];
+    if (d.talking.summary) parts.push(el('p', null, d.talking.summary));
+    const ul = el('ul');
+    d.talking.points.forEach(t => ul.append(el('li', null, t)));
+    parts.push(ul);
+    c.append(fold('Talking points', String(d.talking.points.length), ...parts));
+  }
+  const facts = factsFold(d);
+  if (facts) c.append(facts);
+  if (d.couldnt_confirm && d.couldnt_confirm.length) {
+    const ul = el('ul');
+    d.couldnt_confirm.forEach(t => ul.append(el('li', null, t)));
+    c.append(fold("What we couldn't confirm", String(d.couldnt_confirm.length), ul));
+  }
+  const pages = pagesFold(d.details);
+  if (pages) c.append(pages);
+  return c;
+}
+
+function cantTellCard(d) {
+  const c = el('div', 'card');
+  c.append(topLine(d), verdictLine(d, false));
+  const notice = el('div', 'notice');
+  notice.append(el('p', null, d.message || d.what_happened));
+  c.append(notice);
+  const options = (d.candidates || []).filter(o => o.name);
+  if (options.length) {
+    const box = el('div', 'options');
+    box.setAttribute('role', 'group');
+    box.setAttribute('aria-label', 'Pick the company you mean');
+    // With its website the check reads that site; without one, the fuller name is searched (plus its
+    // description when the name is the one typed, or it would come back ambiguous again).
+    const typed = (d.business_name || '').trim().toLowerCase();
+    options.forEach(o => box.append(button('option', [o.name, o.description, o.domain].filter(Boolean).join(' · '), () => {
+      const same = o.name.trim().toLowerCase() === typed;
+      q.value = !o.domain && same && o.description ? o.name + ', ' + o.description : o.name;
+      urlInput.value = o.domain ? 'https://' + o.domain : '';
+      urlAutoFilled = !!o.domain;
+      form.requestSubmit();
+    })));
+    c.append(box);
+  } else if ((d.what_to_do || []).length) {
+    const ul = el('ul', 'todo');
+    d.what_to_do.forEach(t => ul.append(el('li', null, t)));
+    c.append(ul);
+  }
+  c.append(pagesFold(d.details) || document.createDocumentFragment());
+  return c;
+}
+
+// Search couldn't say who this is: no verdict, just a box for their website. Re-runs with it.
+function needsWebsiteCard(d) {
+  const c = el('div', 'card');
+  const name = d.business_name || q.value.trim();
+  c.append(el('h2', 'paste-head', d.message || ('Paste ' + name + "'s website to continue")));
+  const row = el('form', 'paste-row');
+  row.noValidate = true;
+  const label = el('label', 'sr-only', name + "'s website");
+  label.htmlFor = 'paste-url';
+  const input = el('input');
+  input.id = 'paste-url'; input.inputMode = 'url'; input.placeholder = 'example.com'; input.autocomplete = 'off';
+  const go = el('button', 'btn btn-primary', 'Check');
+  go.type = 'submit';
+  row.append(label, input, go);
+  row.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!input.value.trim()) { input.focus(); return; }
+    q.value = name;
+    urlInput.value = input.value.trim();
+    urlAutoFilled = true;
+    form.requestSubmit();
+  });
+  c.append(row);
+  requestAnimationFrame(() => input.focus());
+  return c;
+}
+
+function render(d, notes) {
+  if (d.status === 'needs_website') { show([needsWebsiteCard(d)], true); return; }
+  if (d.status === 'insufficient_evidence') { show([cantTellCard(d)], true); return; }
+  show([verdictCard(d, notes), draftCard(d)], false);
+}
+
+function renderProblem(d) {
+  const reason = d && d.reason;
+  const msg = (d && d.error) || 'That took too long or something went wrong. Try again.';
+  if (reason === 'limit_reached') {
+    const notice = el('div', 'notice');
+    const p2 = el('p');
+    p2.append(extLink('Want to see it on your own leads? Message me on LinkedIn →', LINKEDIN_URL));
+    notice.append(el('p', null, msg), p2);
+    notice.style.marginTop = '0';
+    show([card(notice)], true);
+    return;
+  }
+  const amber = reason === 'busy' || reason === 'demo_closed';
+  const box = el(amber ? 'div' : 'p', amber ? 'notice' : 'error');
+  if (amber) { box.append(el('p', null, msg)); box.style.marginTop = '0'; } else { box.textContent = msg; }
+  const nodes = [box];
+  if (reason !== 'demo_closed' && reason !== 'invalid') {
+    nodes.push(button('btn btn-ghost retry', 'Try again', () => form.requestSubmit()));
+  }
+  show([card(...nodes)], true);
+}
+
+// ---- one loader for everything ----
+// A live check moves through the stages on its real timing; a saved result plays the same
+// stages over SAVED_RUN_MS, then shows.
+let timer = null;
+let savedRun = null;  // the pending saved-result timeout
+function setLoading(on, savedMs) {
+  btn.disabled = on;
+  document.querySelectorAll('.chip, .option, .seller-chip').forEach(c => { c.disabled = on; });
+  clearInterval(timer);
+  if (!on) { btn.textContent = 'Check'; return; }
+  const started = Date.now();
+  const stage = el('p', 'stage');
+  const sub = el('p', 'stage-sub', 'Usually 30-90 seconds.');
+  results.className = 'results single';
+  results.replaceChildren(card(stage, sub));
+  const tick = () => {
+    const ms = Date.now() - started;
+    btn.textContent = 'Checking… ' + Math.floor(ms / 1000) + 's';
+    const at = savedMs ? Math.min(STAGES.length - 1, Math.floor(ms / (savedMs / STAGES.length)))
+                       : LIVE_STAGE_AT.filter(t => ms / 1000 >= t).length - 1;
+    stage.textContent = STAGES[at];
+  };
+  tick();
+  timer = setInterval(tick, savedMs ? 250 : 1000);
+}
+function playSaved(ex, notes = '') {
+  cancelSaved();
+  shown = { name: ex.name, url: '', notes: '' };
+  setLoading(true, SAVED_RUN_MS);
+  savedRun = setTimeout(() => { savedRun = null; setLoading(false); render(ex.result, notes); }, SAVED_RUN_MS);
+}
+function cancelSaved() {
+  if (savedRun === null) return;
+  clearTimeout(savedRun);
+  savedRun = null;
+  setLoading(false);
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (btn.disabled) return;
+  // Only the website filled in: the website is the company to check.
+  const name = q.value.trim() || urlInput.value.trim();
+  if (!name) {
+    document.getElementById('q-error').hidden = false;
+    q.setAttribute('aria-invalid', 'true');
+    q.focus();
+    return;
+  }
+  let url = urlInput.value.trim();
+  if (url && !/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) url = 'https://' + url;
+  const notes = notesInput.value;
+  const ex = savedFor(name, url);  // a chip company typed in: its saved result, not a live run
+  if (ex) { playSaved(ex, notes); return; }
+  shown = null;
+  setLoading(true);
+  try {
+    const res = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ business_name: name, url, notes, seller }),
+    });
+    const data = await res.json().catch(() => null);
+    if (data) setChecksLeft(data.checks_left_today);
+    if (!res.ok || !data || data.error) { renderProblem(data); return; }
+    shown = { name, url: urlInput.value.trim(), notes };
+    render(data, notes);
+  } catch (err) {
+    renderProblem({ error: "We couldn't reach the app. Check your connection and try again." });
+  } finally {
+    setLoading(false);
+  }
+});
+</script>
+</body>
+</html>

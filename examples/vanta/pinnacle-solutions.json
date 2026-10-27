@@ -1,0 +1,40 @@
+{
+  "business_name": "Pinnacle Solutions",
+  "typed_name": null,
+  "reason": "ambiguous",
+  "seller_key": "vanta",
+  "seller": "Vanta",
+  "mismatch_banner": null,
+  "website_found": null,
+  "domain": null,
+  "site_note": null,
+  "sources_count": 0,
+  "message": "We found more than one company called Pinnacle Solutions.",
+  "status": "insufficient_evidence",
+  "verdict": "Can't tell yet",
+  "verdict_tone": "unknown",
+  "what_happened": "We found more than one company called Pinnacle Solutions.",
+  "what_to_do": [
+    "Pick the one you mean, or add their website."
+  ],
+  "details": {
+    "pages": []
+  },
+  "candidates": [
+    {
+      "name": "Pinnacle Solutions Group",
+      "description": "IT consulting services firm in the United States",
+      "domain": null
+    },
+    {
+      "name": "Pinnacle Solutions",
+      "description": "Virtual training, simulation, and aviation services company",
+      "domain": "akima.com"
+    },
+    {
+      "name": "Pinnacle Solutions",
+      "description": "Heavy machinery and equipment rental provider",
+      "domain": null
+    }
+  ]
+}

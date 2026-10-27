@@ -1,0 +1,117 @@
+{
+  "business_name": "Resend",
+  "typed_name": null,
+  "reason": null,
+  "seller_key": "elevenlabs",
+  "seller": "ElevenLabs",
+  "mismatch_banner": null,
+  "website_found": "resend.com",
+  "domain": "resend.com",
+  "site_note": null,
+  "sources_count": 9,
+  "status": "poor_fit",
+  "verdict": "Not a fit",
+  "verdict_tone": "poor",
+  "why_line": "They sell email delivery tools for developers, not audio or video content.",
+  "fit_score": null,
+  "checklist": [
+    {
+      "status": "fail",
+      "text": "Produces audio or video content"
+    },
+    {
+      "status": "fail",
+      "text": "Not in a segment ElevenLabs targets"
+    },
+    {
+      "status": "pass",
+      "text": "Enough info found about them"
+    }
+  ],
+  "category": "Developer tools",
+  "draft": null,
+  "draft_note": null,
+  "existing_customer": false,
+  "contacts": null,
+  "talking": null,
+  "quick_facts": [
+    {
+      "label": "Sells to",
+      "text": "Developers and businesses looking for email delivery solutions",
+      "sources": [
+        {
+          "url": "https://www.cbinsights.com/company/resend",
+          "title": "cbinsights.com"
+        }
+      ]
+    },
+    {
+      "label": "How they make money",
+      "text": "Email API services and subscriptions"
+    },
+    {
+      "label": "Employees",
+      "text": "22 employees",
+      "sources": [
+        {
+          "url": "https://getlatka.com/companies/resend.com",
+          "title": "getlatka.com"
+        }
+      ]
+    },
+    {
+      "label": "Funding",
+      "text": "Series A · $21M raised",
+      "sources": [
+        {
+          "url": "https://tracxn.com/d/companies/resend/__YbYT3aYP6TVx8yBNOc10TTaG6NGPu4hRB9R82WzUZF4",
+          "title": "tracxn.com"
+        }
+      ]
+    },
+    {
+      "label": "HQ",
+      "text": "San Francisco, California",
+      "sources": [
+        {
+          "url": "https://www.cbinsights.com/company/resend",
+          "title": "cbinsights.com"
+        }
+      ]
+    },
+    {
+      "label": "Hiring",
+      "text": "See their careers page",
+      "url": "https://resend.com/careers"
+    },
+    {
+      "label": "Recent news or blog topic",
+      "text": "What you missed at Resend"
+    }
+  ],
+  "social_links": {
+    "linkedin": "https://linkedin.com/company/resend",
+    "youtube": "https://www.youtube.com/channel/UC0FkhoSz2kYqHVBk4L0QYIg"
+  },
+  "couldnt_confirm": [],
+  "details": {
+    "pages": [
+      {
+        "path": "/",
+        "url": "https://resend.com/"
+      },
+      {
+        "path": "/about",
+        "url": "https://resend.com/about"
+      },
+      {
+        "path": "/customers",
+        "url": "https://resend.com/customers"
+      },
+      {
+        "path": "/careers",
+        "url": "https://resend.com/careers"
+      }
+    ]
+  }
+}

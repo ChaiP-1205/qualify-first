@@ -1,0 +1,102 @@
+{
+  "business_name": "Duolingo",
+  "typed_name": null,
+  "reason": null,
+  "seller_key": "vanta",
+  "seller": "Vanta",
+  "mismatch_banner": null,
+  "website_found": "duolingo.com",
+  "domain": "duolingo.com",
+  "site_note": null,
+  "sources_count": 6,
+  "status": "poor_fit",
+  "verdict": "Not a fit",
+  "verdict_tone": "poor",
+  "why_line": "Duolingo is a public company, not a Seed to Series B startup.",
+  "fit_score": null,
+  "checklist": [
+    {
+      "status": "fail",
+      "text": "Seed to Series B stage"
+    },
+    {
+      "status": "fail",
+      "text": "Sells to enterprise customers"
+    },
+    {
+      "status": "pass",
+      "text": "Enough info found about them"
+    }
+  ],
+  "category": "Educational technology",
+  "draft": null,
+  "draft_note": null,
+  "existing_customer": false,
+  "contacts": null,
+  "talking": null,
+  "quick_facts": [
+    {
+      "label": "Sells to",
+      "text": "Individuals seeking language learning solutions",
+      "sources": [
+        {
+          "url": "https://www.cbinsights.com/company/duolingo?__hstc=57153973.9c49e44b73bd3bee6fa385653ecd7c96.1633305601290.1633305601291.1633305601292.1&__hssc=57153973.1.1633305601293&__hsfp=487179910",
+          "title": "cbinsights.com"
+        }
+      ]
+    },
+    {
+      "label": "Employees",
+      "text": "900 employees",
+      "sources": [
+        {
+          "url": "https://www.globaldata.com/company-profile/duolingo-inc",
+          "title": "globaldata.com"
+        }
+      ]
+    },
+    {
+      "label": "Funding",
+      "text": "Public company",
+      "sources": [
+        {
+          "url": "https://quartr.com/insights/edge/keeping-the-streak-alive-the-story-of-duolingo",
+          "title": "quartr.com"
+        }
+      ]
+    },
+    {
+      "label": "HQ",
+      "text": "Pittsburgh, United States",
+      "sources": [
+        {
+          "url": "https://www.globaldata.com/company-profile/duolingo-inc",
+          "title": "globaldata.com"
+        }
+      ]
+    }
+  ],
+  "social_links": {
+    "instagram": "https://www.instagram.com/duolingo",
+    "linkedin": "https://www.linkedin.com/company/duolingo",
+    "youtube": "https://www.youtube.com/user/duolingo",
+    "tiktok": "https://www.tiktok.com/@duolingo"
+  },
+  "couldnt_confirm": [],
+  "details": {
+    "pages": [
+      {
+        "path": "/",
+        "url": "https://www.duolingo.com/"
+      },
+      {
+        "path": "/security",
+        "url": "https://www.duolingo.com/security"
+      },
+      {
+        "path": "/trust",
+        "url": "https://www.duolingo.com/trust"
+      }
+    ]
+  }
+}
