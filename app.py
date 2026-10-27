@@ -1813,9 +1813,13 @@ def check_and_record_usage():
 def index():
     return render_template("index.html", sellers={k: icp_card(s) for k, s in SELLERS.items()},
                            default_seller=DEFAULT_SELLER_KEY, examples=load_examples(), checks_left=checks_left(client_ip()),
-                           checks_per_day=DEMO_CHECKS_PER_DAY, linkedin_url=LINKEDIN_URL, github_url=GITHUB_URL)
+                           checks_per_day=DEMO_CHECKS_PER_DAY, linkedin_url=LINKEDIN_URL, github_url=GITHUB_URL,
+                           posthog_key=POSTHOG_KEY, posthog_host=POSTHOG_HOST)
 
 
+# Anonymous analytics (PostHog): off unless POSTHOG_KEY is set, so no key means no script and nothing sent.
+POSTHOG_KEY = (os.environ.get("POSTHOG_KEY") or "").strip()
+POSTHOG_HOST = (os.environ.get("POSTHOG_HOST") or "").strip() or "https://us.i.posthog.com"
 LINKEDIN_URL = "https://www.linkedin.com/in/chaitrali-patne/"
 GITHUB_URL = "https://github.com/ChaiP-1205/qualify-first"
 
@@ -2562,10 +2566,10 @@ def strong_sources(person):
 
 
 def contacts_for(name, research, leaders, site_people, profile):
-    """Who to contact, by company size: under 30 staff the founder or CEO; 30-200 the heads of the
-    relevant functions (named, then titles to look for), the founder only as backup, listed last; over
-    200 or public never the CEO or founder, only a VP/Director/Head of a relevant function with a
-    sourced name, else job titles to look for.
+    """Who to contact, by company size: under 30 staff the founder or CEO; 30-200 (or size unknown)
+    the heads of the relevant functions (named, then titles to look for), the founder only as backup,
+    listed last; over 200 or public never the CEO or founder, only a VP/Director/Head of a relevant
+    function with a sourced name, else job titles to look for.
     Every person and title gets a one-line reason and a LinkedIn search link."""
     size = company_size(research)
     pool = [p for p in merge_contacts([l for l in leaders if strong_sources(l)], site_people, limit=8)]
@@ -2582,11 +2586,9 @@ def contacts_for(name, research, leaders, site_people, profile):
         people = founders or heads
     elif size == "large":
         people = heads
-    elif size == "mid":
+    else:  # 30-200, or size unknown: the functional roles, the founder only as backup
         people = heads
         backup = [{**p, "reason": f"{p['title']}: signs off at the end, not the first contact"} for p in founders[:1]]
-    else:  # size unknown
-        people = heads + founders[:1]
     people = [{**p, "linkedin": linkedin_search(p["name"], name)} for p in people[:3]]
     backup = [{**p, "linkedin": linkedin_search(p["name"], name)} for p in backup]
 

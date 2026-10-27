@@ -8,6 +8,22 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+{% if posthog_key %}
+<script>
+  /* Anonymous analytics (PostHog), loaded only when POSTHOG_KEY is set. The standard snippet: */
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init({{ posthog_key|tojson }}, {
+    api_host: {{ posthog_host|tojson }},
+    person_profiles: 'identified_only',  // anonymous: no person profiles
+    autocapture: false,                   // only the named events below, never the text of what is clicked
+    capture_pageview: true,
+    save_campaign_params: true,           // UTM parameters, captured with the pageview
+    disable_session_recording: false,
+    // Nothing typed is recorded, nor the email draft shown on the page.
+    session_recording: { maskAllInputs: true, maskTextSelector: '.email, .angle' },
+  });
+</script>
+{% endif %}
 <style>
   :root {
     --teal: #0F766E; --teal-dark: #0B5F58; --teal-bg: #E6F4F2; --teal-line: #A7D7D1; --mint: #CCFBF1;
@@ -230,7 +246,7 @@
       <h1>Qualify First</h1>
       <p>Know if a lead is worth it before you write a word.</p>
     </div>
-    <a class="hire" href="{{ linkedin_url }}" target="_blank" rel="noopener noreferrer">Hire the builder →</a>
+    <a class="hire" data-track="hire_clicked" href="{{ linkedin_url }}" target="_blank" rel="noopener noreferrer">Hire the builder →</a>
   </div>
 </header>
 
@@ -296,8 +312,8 @@
       <p class="copyright">© 2026 Chaitrali Patne. All rights reserved.</p>
     </div>
     <div class="foot-right">
-      <p><a class="talk" href="{{ linkedin_url }}" target="_blank" rel="noopener noreferrer">Hiring a GTM engineer, or want this for your team? Let's talk →</a></p>
-      <p><a href="{{ github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+      <p><a class="talk" data-track="linkedin_clicked" data-where="footer" href="{{ linkedin_url }}" target="_blank" rel="noopener noreferrer">Hiring a GTM engineer, or want this for your team? Let's talk →</a></p>
+      <p><a data-track="github_clicked" href="{{ github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a></p>
     </div>
   </div>
 </footer>
@@ -378,6 +394,30 @@ let seller = DEFAULT_SELLER;
 let shown = null;  // {name, url, notes} of the result on screen; a seller switch re-checks it
 const sellerChips = [...document.querySelectorAll('.seller-chip')];
 const icp = document.getElementById('icp');
+// ---- anonymous analytics: a no-op unless the PostHog snippet loaded (POSTHOG_KEY set) ----
+// Only these named events. The one piece of typed text sent is the company in the search box (or the chip's
+// name); never the note, the website field or the email.
+function track(event, props) {
+  if (window.posthog && typeof window.posthog.capture === 'function') window.posthog.capture(event, props || {});
+}
+function noteBucket(notes) {
+  const n = (notes || '').trim().length;
+  return n === 0 ? 'none' : n < 80 ? 'short' : n <= 250 ? 'medium' : 'long';
+}
+let lastCompany = null;  // the company of the result on screen, for email_copied
+function trackCheck(company, d, mode, notes, outcome) {
+  lastCompany = company;
+  track('check_run', { seller, company, verdict: (d && d.verdict) || null, saved_or_live: mode,
+                       has_note: noteBucket(notes) !== 'none', note_length_bucket: noteBucket(notes), outcome });
+}
+function checkOutcome(d) {  // a fit whose draft didn't pass the checks (an existing customer gets none by design)
+  return d.status === 'draft_written' && !d.draft && !d.existing_customer ? 'draft_held_back' : 'success';
+}
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-track]');
+  if (a) track(a.dataset.track, a.dataset.where ? { where: a.dataset.where } : {});
+});
+
 const icpToggle = document.getElementById('toggle-icp');
 
 function renderIcp() {
@@ -392,8 +432,12 @@ function setIcpOpen(open) {
   icpToggle.setAttribute('aria-expanded', String(open));
   icpToggle.textContent = open ? 'Hide the ICP' : 'See the ICP →';
 }
-icpToggle.addEventListener('click', () => setIcpOpen(icp.hidden));
+icpToggle.addEventListener('click', () => {
+  if (icp.hidden) track('icp_opened', { seller });
+  setIcpOpen(icp.hidden);
+});
 function openIcp() {
+  if (icp.hidden) track('icp_opened', { seller });
   setIcpOpen(true);
   icp.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
@@ -406,6 +450,7 @@ function setSeller(key) {
 }
 sellerChips.forEach(c => c.addEventListener('click', () => {
   if (btn.disabled || c.dataset.seller === seller) return;
+  track('seller_switched', { seller: c.dataset.seller, previous_seller: seller });
   setSeller(c.dataset.seller);
   if (!shown) return;
   // The result on screen was scored against the other seller: show this seller's saved one, else check it live.
@@ -459,6 +504,7 @@ function renderChips() {
     chip.append(el('span', 'dot'), el('span', null, ex.name), el('span', 'sep', '·'), el('span', null, TONE_LABEL[tone] || ex.result.verdict));
     chip.addEventListener('click', () => {
       if (btn.disabled) return;
+      track('chip_clicked', { seller, company: ex.name });
       q.value = ex.name;
       urlInput.value = '';
       urlAutoFilled = false;
@@ -583,7 +629,7 @@ function contactFold(c) {
     list.append(ol);
   };
   const noOne = 'No named decision-maker found. Look for these roles:';
-  if (c.size === 'mid' || backup.length) {  // 30-200 staff: the functional roles, then the founder as backup
+  if (c.size === 'mid' || !c.size || backup.length) {  // 30-200 staff or size unknown: roles, then the founder as backup
     section(people.length || backup.length ? 'Start with' : noOne, [...people.map(person), ...look.map(role)]);
     section('Backup', backup.map(person));
   } else {
@@ -655,6 +701,7 @@ function draftCard(d) {
   const copy = button('copy-btn', 'Copy email', async () => {
     const ok = await copyText('Subject: ' + draft.subject + '\n\n' + draft.body);
     copy.textContent = ok ? 'Copied ✓' : 'Copy failed';
+    if (ok) track('email_copied', { seller: d.seller_key || seller, company: lastCompany });
     copy.classList.toggle('copied', ok);
     setTimeout(() => { copy.textContent = 'Copy email'; copy.classList.remove('copied'); }, 2000);
   });
@@ -772,7 +819,10 @@ function renderProblem(d) {
   if (reason === 'limit_reached') {
     const notice = el('div', 'notice');
     const p2 = el('p');
-    p2.append(extLink('Want to see it on your own leads? Message me on LinkedIn →', LINKEDIN_URL));
+    const talk = extLink('Want to see it on your own leads? Message me on LinkedIn →', LINKEDIN_URL);
+    talk.dataset.track = 'linkedin_clicked';
+    talk.dataset.where = 'limit_notice';
+    p2.append(talk);
     notice.append(el('p', null, msg), p2);
     notice.style.marginTop = '0';
     show([card(notice)], true);
@@ -817,7 +867,12 @@ function playSaved(ex, notes = '') {
   cancelSaved();
   shown = { name: ex.name, url: '', notes: '' };
   setLoading(true, SAVED_RUN_MS);
-  savedRun = setTimeout(() => { savedRun = null; setLoading(false); render(ex.result, notes); }, SAVED_RUN_MS);
+  savedRun = setTimeout(() => {
+    savedRun = null;
+    setLoading(false);
+    render(ex.result, notes);
+    trackCheck(ex.name, ex.result, 'saved', notes, checkOutcome(ex.result));
+  }, SAVED_RUN_MS);
 }
 function cancelSaved() {
   if (savedRun === null) return;
@@ -842,6 +897,8 @@ form.addEventListener('submit', async (e) => {
   const notes = notesInput.value;
   const ex = savedFor(name, url);  // a chip company typed in: its saved result, not a live run
   if (ex) { playSaved(ex, notes); return; }
+  // For analytics: the search-box company only, never the website field (checked from the website alone: none).
+  const company = q.value.trim() && q.value.trim() !== urlInput.value.trim() ? q.value.trim() : null;
   shown = null;
   setLoading(true);
   try {
@@ -852,11 +909,17 @@ form.addEventListener('submit', async (e) => {
     });
     const data = await res.json().catch(() => null);
     if (data) setChecksLeft(data.checks_left_today);
-    if (!res.ok || !data || data.error) { renderProblem(data); return; }
+    if (!res.ok || !data || data.error) {
+      renderProblem(data);
+      trackCheck(company, data, 'live', notes, data && data.reason === 'limit_reached' ? 'limit_reached' : 'error');
+      return;
+    }
     shown = { name, url: urlInput.value.trim(), notes };
     render(data, notes);
+    trackCheck(company, data, 'live', notes, checkOutcome(data));
   } catch (err) {
     renderProblem({ error: "We couldn't reach the app. Check your connection and try again." });
+    trackCheck(company, null, 'live', notes, 'error');
   } finally {
     setLoading(false);
   }
