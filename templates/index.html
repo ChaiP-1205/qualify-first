@@ -16,12 +16,22 @@
     api_host: {{ posthog_host|tojson }},
     person_profiles: 'identified_only',  // anonymous: no person profiles
     autocapture: false,                   // only the named events below, never the text of what is clicked
-    capture_pageview: true,
+    capture_pageview: false,              // sent below, once a ?ref= source is registered
     save_campaign_params: true,           // UTM parameters, captured with the pageview
     disable_session_recording: false,
     // Nothing typed is recorded, nor the email draft shown on the page.
     session_recording: { maskAllInputs: true, maskTextSelector: '.email, .angle' },
   });
+  // ?ref=hc with no utm_source counts as utm_source "hc", on the pageview and for the rest of the session.
+  // Only a short plain code is taken; nothing else is read from the URL.
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var ref = params.get('ref');
+    if (!params.get('utm_source') && ref && /^[A-Za-z0-9_.-]{1,64}$/.test(ref)) {
+      posthog.register_for_session({ utm_source: ref });
+    }
+  })();
+  posthog.capture('$pageview');
 </script>
 {% endif %}
 <style>
