@@ -1813,7 +1813,7 @@ def check_and_record_usage():
 def index():
     return render_template("index.html", sellers={k: icp_card(s) for k, s in SELLERS.items()},
                            default_seller=DEFAULT_SELLER_KEY, examples=load_examples(), checks_left=checks_left(client_ip()),
-                           checks_per_day=DEMO_CHECKS_PER_DAY, linkedin_url=LINKEDIN_URL, github_url=GITHUB_URL,
+                           checks_per_day=DEMO_CHECKS_PER_DAY, linkedin_url=LINKEDIN_URL,
                            posthog_key=POSTHOG_KEY, posthog_host=POSTHOG_HOST)
 
 
@@ -1821,7 +1821,6 @@ def index():
 POSTHOG_KEY = (os.environ.get("POSTHOG_KEY") or "").strip()
 POSTHOG_HOST = (os.environ.get("POSTHOG_HOST") or "").strip() or "https://us.i.posthog.com"
 LINKEDIN_URL = "https://www.linkedin.com/in/chaitrali-patne/"
-GITHUB_URL = "https://github.com/ChaiP-1205/qualify-first"
 
 
 def example_path(seller, slug):
